@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * Lifecycle POOLED: pool limita rounds concorrentes (backpressure no gateway).
  */
 @RemoteObject(id = "paxos-relay")
-@Lifecycle(value = Lifecycle.Kind.POOLED, poolSize = 4)
+@Lifecycle(value = Lifecycle.Kind.POOLED, poolSize = 512)
 public class PaxosRelayWorker {
     private static final Logger log = LoggerFactory.getLogger(PaxosRelayWorker.class);
     private static final long FANOUT_TIMEOUT_MS = 5_000L;

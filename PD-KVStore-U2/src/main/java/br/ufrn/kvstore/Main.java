@@ -42,12 +42,20 @@ public final class Main {
             default -> throw new IllegalArgumentException("role desconhecida: " + cfg.role());
         }
 
+        // Canal principal (TCP por padrao).
         broker.start(cfg.protocol(), cfg.port());
+
+        // Gateway tambem abre UDP dedicado para heartbeat (alivia portas efemeras TCP sob carga).
+        if (cfg.role().equals("gateway") && !cfg.protocol().equals("udp")) {
+            broker.start("udp", cfg.heartbeatPort());
+            log.info("Heartbeat UDP escutando na porta {}", cfg.heartbeatPort());
+        }
 
         if (!cfg.role().equals("gateway")) {
             var gwAor = AbsoluteObjectReference.parse(cfg.gateway() + "/gateway");
+            var hbAor = AbsoluteObjectReference.parse(cfg.heartbeatGateway() + "/gateway");
             var self = new ServiceInfo(cfg.id(), cfg.role(), cfg.host(), cfg.port(), cfg.protocol());
-            new GatewayLink(clientBroker, gwAor, self).registerAndStart();
+            new GatewayLink(clientBroker, gwAor, hbAor, self).registerAndStart();
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(broker::stop));

@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ProposerService {
     private static final Logger log = LoggerFactory.getLogger(ProposerService.class);
 
-    private static final int MAX_RETRIES = 5;
+    private static final int MAX_RETRIES = 10;
     private static final long RETRY_MIN_MS = 100;
     private static final long RETRY_MAX_MS = 1000;
 

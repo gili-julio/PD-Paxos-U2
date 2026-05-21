@@ -88,7 +88,9 @@ public final class Invoker {
                     if (raw == null && p.required()) throw RemotingException.badRequest("Missing header: " + p.name());
                     args[i] = marshaller.convertString(raw, p.type());
                 }
-                case BODY -> args[i] = marshaller.fromJson(req.body(), p.type());
+                case BODY -> args[i] = (p.type() == String.class)
+                        ? req.body()
+                        : marshaller.fromJson(req.body(), p.type());
                 case BODY_FIELD -> {
                     var obj = bodyCache.get();
                     var el = obj.get(p.name());

@@ -30,7 +30,7 @@ public final class Broker {
     private final List<InvocationInterceptor> globalInterceptors;
     private final String host;
 
-    private volatile ProtocolPlugin activePlugin;
+    private final List<ProtocolPlugin> activePlugins = new ArrayList<>();
 
     private Broker(Builder b) {
         this.lookup = b.lookup;
@@ -58,20 +58,22 @@ public final class Broker {
         return this;
     }
 
-    /** Starts the chosen protocol plug-in on {@code port}. */
+    /** Starts a protocol plug-in on {@code port}. Pode ser chamado varias vezes para suportar multiplos protocolos em paralelo. */
     public void start(String protocolName, int port) throws Exception {
         ProtocolPlugin plugin = protocols.get(protocolName);
         ServerRequestHandler srh = new ServerRequestHandler(
                 lookup, invoker, marshaller, globalInterceptors,
                 plugin.name(), host, port);
         plugin.start(port, srh::handle);
-        this.activePlugin = plugin;
+        activePlugins.add(plugin);
         log.info("Broker started: protocol={} host={} port={} objects={}",
                 protocolName, host, port, lookup.size());
     }
 
     public void stop() {
-        if (activePlugin != null) activePlugin.stop();
+        for (ProtocolPlugin p : activePlugins) {
+            try { p.stop(); } catch (Exception ignored) {}
+        }
         for (RemoteEntry e : lookup.all()) e.instanceManager().shutdown();
     }
 

@@ -2,11 +2,7 @@ package br.ufrn.middleware.lifecycle;
 
 import java.util.function.Supplier;
 
-/**
- * Static Instance pattern. Single shared instance, lazily created on first call.
- * Suitable for stateless services or for caches/state that the application
- * deliberately wants shared across all clients.
- */
+/** Static Instance. Singleton lazy. */
 public final class StaticInstanceManager implements InstanceManager {
     private final Supplier<?> factory;
     private volatile Object instance;

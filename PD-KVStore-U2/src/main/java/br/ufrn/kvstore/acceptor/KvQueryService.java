@@ -7,10 +7,7 @@ import br.ufrn.middleware.annotation.MethodMapping;
 import br.ufrn.middleware.annotation.PathVar;
 import br.ufrn.middleware.annotation.RemoteObject;
 
-/**
- * Servico de leitura do KV. Lifecycle LEASED com TTL: instancia e descartada
- * apos {@code ttlSeconds} ociosa, mas o estado em {@link SharedKvStore} persiste.
- */
+/** Leitura do KV. LEASED: instancia expira; SharedKvStore preserva dados. */
 @RemoteObject(id = "kv")
 @Lifecycle(value = Lifecycle.Kind.LEASED, ttlSeconds = 60)
 public class KvQueryService {

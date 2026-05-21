@@ -7,10 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Attaches one or more {@link InvocationInterceptor} classes to a Remote Object
- * or specific method.
- */
+/** Anexa interceptors a classe ou metodo. */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Intercept {

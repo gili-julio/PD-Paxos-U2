@@ -3,15 +3,12 @@ package br.ufrn.middleware.broker;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
-/**
- * Declares how a single Java method parameter is sourced from the incoming
- * {@link br.ufrn.middleware.protocol.Request}.
- */
+/** Como um parametro Java vem do Request. */
 public final class ParamBinding {
     public enum Source { PATH, QUERY, HEADER, BODY, BODY_FIELD, CONTEXT }
 
     private final Source source;
-    private final String name;     // null for BODY/CONTEXT
+    private final String name;
     private final Type type;
     private final boolean required;
 

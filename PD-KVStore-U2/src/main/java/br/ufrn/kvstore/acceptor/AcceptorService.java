@@ -12,7 +12,7 @@ import br.ufrn.middleware.annotation.RemoteObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Acceptor Paxos. Lifecycle STATIC porque o estado de consenso e unico por no. */
+/** Acceptor Paxos. STATIC. */
 @RemoteObject(id = "acceptor")
 @Lifecycle(Lifecycle.Kind.STATIC)
 public class AcceptorService {

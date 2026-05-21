@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Registry singleton: servicos ativos por role + ultimo heartbeat. */
+/** Registry de servicos ativos. */
 public final class GatewayRegistry {
     private static final GatewayRegistry INSTANCE = new GatewayRegistry();
     public static final long HEARTBEAT_TIMEOUT_MS = 10_000;

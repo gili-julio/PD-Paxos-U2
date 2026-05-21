@@ -3,7 +3,7 @@ package br.ufrn.kvstore.acceptor;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Store KV compartilhado pelo Acceptor e pelo KvQueryService (leased). */
+/** KV singleton. */
 public final class SharedKvStore {
     private static final SharedKvStore INSTANCE = new SharedKvStore();
     private final ConcurrentHashMap<String, String> store = new ConcurrentHashMap<>();

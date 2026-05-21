@@ -5,11 +5,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-/**
- * Pooling pattern. Maintains a bounded pool of {@code size} pre-created
- * instances. {@link #acquire()} blocks (up to {@link #ACQUIRE_TIMEOUT_MS})
- * until one is available, and {@link #release(Object)} returns it to the pool.
- */
+/** Pooling. Pool fixo; acquire bloqueia ate ACQUIRE_TIMEOUT_MS. */
 public final class PooledInstanceManager implements InstanceManager {
     private static final long ACQUIRE_TIMEOUT_MS = 5_000L;
 

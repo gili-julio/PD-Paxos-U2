@@ -2,10 +2,7 @@ package br.ufrn.middleware.identification;
 
 import java.util.Objects;
 
-/**
- * Object Id (Identification Pattern). Stable logical identifier of a Remote Object,
- * independent of its physical location or lifecycle.
- */
+/** Object Id. Identificador logico do Remote Object. */
 public final class ObjectId {
     private final String value;
 

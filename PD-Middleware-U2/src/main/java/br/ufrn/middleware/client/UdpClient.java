@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** {@link RemoteClient} that speaks the HTTP-like envelope used by {@link br.ufrn.middleware.protocol.udp.UdpProtocolPlugin}. */
+/** Cliente UDP com envelope HTTP-like. */
 public final class UdpClient implements RemoteClient {
     private static final int BUFFER_SIZE = 64 * 1024;
     private static final int TIMEOUT_MS = 5_000;

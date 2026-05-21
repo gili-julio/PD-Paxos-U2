@@ -2,10 +2,7 @@ package br.ufrn.middleware.lifecycle;
 
 import java.util.function.Supplier;
 
-/**
- * Per-Request Instance pattern. A brand new instance is created for every
- * invocation, then discarded. Maximum isolation, no concurrency concerns.
- */
+/** Per-Request. Nova instancia a cada chamada. */
 public final class PerRequestInstanceManager implements InstanceManager {
     private final Supplier<?> factory;
 

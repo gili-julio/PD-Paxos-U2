@@ -3,7 +3,7 @@ package br.ufrn.middleware.protocol;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Holds installed {@link ProtocolPlugin}s by {@link ProtocolPlugin#name() name}. */
+/** Registry nome -> ProtocolPlugin. */
 public final class ProtocolRegistry {
     private final Map<String, ProtocolPlugin> plugins = new HashMap<>();
 

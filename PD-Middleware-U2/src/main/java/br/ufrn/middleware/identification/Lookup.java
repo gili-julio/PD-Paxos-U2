@@ -5,11 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Lookup (Identification Pattern). Thread-safe registry mapping {@link ObjectId}
- * -> {@link RemoteEntry}. The {@link br.ufrn.middleware.broker.ServerRequestHandler}
- * consults it to resolve incoming requests.
- */
+/** Lookup. Registry thread-safe ObjectId -> RemoteEntry. */
 public final class Lookup {
     private final Map<ObjectId, RemoteEntry> registry = new ConcurrentHashMap<>();
 

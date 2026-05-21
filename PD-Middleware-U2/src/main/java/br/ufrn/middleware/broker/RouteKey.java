@@ -4,7 +4,7 @@ import br.ufrn.middleware.annotation.HttpMethod;
 
 import java.util.Objects;
 
-/** (method, pathTemplate) key for the route table. */
+/** Chave da tabela de rotas. */
 public record RouteKey(HttpMethod method, String pathTemplate) {
     public RouteKey {
         Objects.requireNonNull(method);

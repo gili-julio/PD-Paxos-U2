@@ -8,10 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Invocation Context (Extension Pattern). Per-invocation key/value store
- * propagated through the interceptor chain and exposed via {@link #current()}.
- */
+/** Invocation Context. Estado da chamada atual via ThreadLocal. */
 public final class InvocationContext {
     private static final ThreadLocal<InvocationContext> CURRENT = new ThreadLocal<>();
 

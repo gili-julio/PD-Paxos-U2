@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-/** Out-of-the-box interceptor that logs entry/exit/error for every invocation. */
+/** Interceptor que loga entry/exit/error. */
 public final class LoggingInterceptor implements InvocationInterceptor {
     private static final Logger log = LoggerFactory.getLogger("middleware.invocation");
 

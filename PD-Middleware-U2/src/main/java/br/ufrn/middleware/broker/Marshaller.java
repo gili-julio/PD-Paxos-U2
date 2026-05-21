@@ -8,11 +8,7 @@ import com.google.gson.JsonParser;
 
 import java.lang.reflect.Type;
 
-/**
- * Marshaller (Basic Remoting Pattern). Converts wire payloads (JSON strings,
- * query/path strings) to/from Java types using Gson. Centralises serialization
- * so other classes never touch Gson directly.
- */
+/** Marshaller. Centraliza Gson para serializacao. */
 public final class Marshaller {
     private final Gson gson = new GsonBuilder().serializeNulls().create();
 

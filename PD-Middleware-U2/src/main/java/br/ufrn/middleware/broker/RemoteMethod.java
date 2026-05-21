@@ -7,10 +7,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Metadata for a method discovered on a Remote Object: HTTP mapping, parameter
- * bindings, and method-level interceptors.
- */
+/** Metadata de um metodo remoto. */
 public final class RemoteMethod {
     private final HttpMethod httpMethod;
     private final PathTemplate path;

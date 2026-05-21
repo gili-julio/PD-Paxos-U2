@@ -1,6 +1,6 @@
 package br.ufrn.kvstore.acceptor;
 
-/** Singleton: id deste acceptor + estado Paxos compartilhado. */
+/** Id + estado Paxos do acceptor. */
 public final class AcceptorContext {
     private static volatile AcceptorContext INSTANCE;
 

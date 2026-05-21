@@ -8,10 +8,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Client-side façade. Picks the right {@link RemoteClient} based on the
- * {@link AbsoluteObjectReference}'s protocol and (de)marshals the payload.
- */
+/** Facade do lado cliente. Escolhe RemoteClient pelo protocolo do AOR. */
 public final class ClientBroker {
     private final Marshaller marshaller;
     private final Map<String, RemoteClient> clients = new HashMap<>();

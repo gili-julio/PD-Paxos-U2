@@ -19,7 +19,7 @@ import br.ufrn.middleware.identification.AbsoluteObjectReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Entrypoint unico. --role=gateway|proposer|acceptor seleciona quais @RemoteObject registrar. */
+/** Entrypoint. --role escolhe quais @RemoteObject registrar. */
 public final class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
@@ -42,10 +42,9 @@ public final class Main {
             default -> throw new IllegalArgumentException("role desconhecida: " + cfg.role());
         }
 
-        // Canal principal (TCP por padrao).
         broker.start(cfg.protocol(), cfg.port());
 
-        // Gateway tambem abre UDP dedicado para heartbeat (alivia portas efemeras TCP sob carga).
+        // Gateway abre UDP extra p/ heartbeat sair do canal TCP carregado.
         if (cfg.role().equals("gateway") && !cfg.protocol().equals("udp")) {
             broker.start("udp", cfg.heartbeatPort());
             log.info("Heartbeat UDP escutando na porta {}", cfg.heartbeatPort());

@@ -1,6 +1,6 @@
 package br.ufrn.middleware.client;
 
-/** Thrown by {@link RemoteClient} when a client-side call fails or returns non-2xx. */
+/** Erro do lado cliente. */
 public class RemoteCallException extends RuntimeException {
     private final int status;
 

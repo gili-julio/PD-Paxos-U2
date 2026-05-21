@@ -16,14 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Cliente HTTP/1.1 sobre TCP com pool de conexoes keep-alive por destino.
- *
- * <p>Sob carga, abrir Socket nova por call esgota portas efemeras (TIME_WAIT).
- * O pool reusa conexoes ate {@link #IDLE_MAX_PER_HOST} por destino. Conexoes
- * que voltam mortas (server fechou, EOF, timeout) sao descartadas e uma nova
- * e criada na proxima call.
- */
+/** Cliente HTTP/1.1 TCP com pool keep-alive por destino. */
 public final class TcpHttpClient implements RemoteClient {
     private static final int CONNECT_TIMEOUT_MS = 3_000;
     private static final int READ_TIMEOUT_MS = 10_000;
@@ -39,7 +32,6 @@ public final class TcpHttpClient implements RemoteClient {
         String key = host + ":" + port;
         Deque<PooledConn> pool = pools.computeIfAbsent(key, k -> new ArrayDeque<>());
 
-        // Tenta reusar do pool; se falhar (server fechou socket idle), descarta e tenta dnv.
         for (int attempt = 0; attempt < 2; attempt++) {
             PooledConn conn = borrow(pool, host, port);
             try {
@@ -49,7 +41,6 @@ public final class TcpHttpClient implements RemoteClient {
                 return response;
             } catch (RemoteCallException re) {
                 conn.closeQuiet();
-                // Se foi falha de I/O ao reusar conexao do pool, retry imediato com nova.
                 if (attempt == 0 && re.status() == -1 && conn.fromPool) continue;
                 throw re;
             } catch (Exception e) {
@@ -80,7 +71,7 @@ public final class TcpHttpClient implements RemoteClient {
                 conn.closeQuiet();
                 return;
             }
-            conn.fromPool = false; // reseta flag p/ proxima borrow marcar
+            conn.fromPool = false;
             pool.offerFirst(conn);
         }
     }
@@ -117,14 +108,12 @@ public final class TcpHttpClient implements RemoteClient {
             conn.out.flush();
         }
 
-        // Le status line
         String statusLine = readLine(conn.in);
         if (statusLine == null) throw new RemoteCallException(-1, "Empty response");
         String[] sp = statusLine.split(" ", 3);
         if (sp.length < 2) throw new RemoteCallException(-1, "Malformed status line: " + statusLine);
         int code = Integer.parseInt(sp[1]);
 
-        // Le headers
         Map<String, String> respHeaders = new LinkedHashMap<>();
         String h;
         while ((h = readLine(conn.in)) != null && !h.isEmpty()) {
@@ -132,7 +121,6 @@ public final class TcpHttpClient implements RemoteClient {
             if (colon > 0) respHeaders.put(h.substring(0, colon).trim(), h.substring(colon + 1).trim());
         }
 
-        // Le body via Content-Length
         StringBuilder bodyBuf = new StringBuilder();
         String cl = respHeaders.get("Content-Length");
         if (cl != null) {
@@ -147,7 +135,6 @@ public final class TcpHttpClient implements RemoteClient {
             bodyBuf.append(new String(buf, 0, read, StandardCharsets.UTF_8));
         }
 
-        // Decide keep-alive a partir da resposta
         String connHdr = respHeaders.get("Connection");
         conn.keepAlive = connHdr == null || !"close".equalsIgnoreCase(connHdr.trim());
 
@@ -157,7 +144,6 @@ public final class TcpHttpClient implements RemoteClient {
         return bodyBuf.toString();
     }
 
-    /** Le uma linha terminada em \r\n direto do InputStream (sem buffering proprio do Reader). */
     private static String readLine(BufferedInputStream in) throws Exception {
         var bo = new java.io.ByteArrayOutputStream();
         int prev = -1;

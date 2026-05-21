@@ -15,16 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Liga o servico ao gateway. Single-thread scheduler dispara um tick a cada
- * {@link #HEARTBEAT_PERIOD_SEC} segundos:
- * <ul>
- *   <li>Se ainda nao registrado (boot ou {@code unknown} recebido), tenta registrar.</li>
- *   <li>Se registrado, envia heartbeat. Resposta {@code "unknown"} marca como
- *       nao-registrado para o proximo tick re-registrar.</li>
- * </ul>
- * Falhas de rede sao logadas e o tick segue tentando — nao bloqueia o boot.
- */
+/** Liga servico ao gateway. Tick a cada HEARTBEAT_PERIOD_SEC: registra ou heartbeat. */
 public final class GatewayLink {
     private static final Logger log = LoggerFactory.getLogger(GatewayLink.class);
     private static final long HEARTBEAT_PERIOD_SEC = 2;
@@ -92,7 +83,6 @@ public final class GatewayLink {
             }
         } catch (RemoteCallException e) {
             log.warn("Heartbeat falhou ({}): {}", heartbeatAor.protocol(), e.getMessage());
-            // mantem registered=true: falha transitoria de rede, nao significa que gateway esqueceu
         }
     }
 

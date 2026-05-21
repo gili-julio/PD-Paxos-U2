@@ -2,7 +2,7 @@ package br.ufrn.kvstore.gateway;
 
 import br.ufrn.middleware.client.ClientBroker;
 
-/** Singleton: ClientBroker compartilhado pelos PaxosRelayWorker do pool. */
+/** ClientBroker compartilhado pelo pool de workers. */
 public final class GatewayContext {
     private static volatile GatewayContext INSTANCE;
 

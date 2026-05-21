@@ -5,9 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Maps a Java method to an HTTP route. Path supports {var} placeholders bound via {@link PathVar}.
- */
+/** Mapeia metodo Java para rota HTTP. Path aceita {var}. */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface MethodMapping {

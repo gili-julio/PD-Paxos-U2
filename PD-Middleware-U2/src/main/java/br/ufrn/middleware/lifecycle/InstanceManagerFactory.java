@@ -6,7 +6,7 @@ import br.ufrn.middleware.broker.RemotingException;
 import java.lang.reflect.Constructor;
 import java.util.function.Supplier;
 
-/** Builds the {@link InstanceManager} declared by a class's {@link Lifecycle} annotation. */
+/** Cria InstanceManager conforme @Lifecycle da classe. */
 public final class InstanceManagerFactory {
     private InstanceManagerFactory() {}
 

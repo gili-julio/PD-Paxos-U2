@@ -9,12 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
-/**
- * Leasing pattern. Lazily creates a single instance and grants it a lease of
- * {@code ttlSeconds}. Every invocation renews the lease. A background sweeper
- * reclaims the instance once the lease expires; the next invocation lazily
- * re-creates it.
- */
+/** Leasing. Instancia lazy com TTL; sweeper descarta se ociosa. */
 public final class LeasedInstanceManager implements InstanceManager {
     private static final Logger log = LoggerFactory.getLogger(LeasedInstanceManager.class);
 

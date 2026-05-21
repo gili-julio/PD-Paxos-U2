@@ -13,17 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Server Request Handler (Basic Remoting Pattern). Receives wire-format
- * requests already parsed into {@link Request} envelopes by a
- * {@link br.ufrn.middleware.protocol.ProtocolPlugin}, resolves the target
- * Remote Object via {@link Lookup}, delegates to the {@link Invoker}, and
- * marshals the result into a {@link Response}.
- *
- * <p>URL layout: {@code /<objectId>/<methodPathTemplate>}. The first segment
- * names the Remote Object; the remainder is matched against the routes
- * registered for that object.
- */
+/** Server Request Handler. URL = /<objectId>/<methodPath>. */
 public final class ServerRequestHandler {
     private static final Logger log = LoggerFactory.getLogger(ServerRequestHandler.class);
 

@@ -6,10 +6,7 @@ import br.ufrn.middleware.lifecycle.InstanceManager;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Entry stored in the {@link Lookup} registry: the Remote Object's id, the
- * lifecycle-aware instance provider, the class metadata, and the routes it exposes.
- */
+/** Entry do Lookup: id + classe + InstanceManager + rotas. */
 public final class RemoteEntry {
     private final ObjectId id;
     private final Class<?> remoteClass;

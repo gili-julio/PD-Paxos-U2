@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Tiny HTTP/1.1 parsing helpers shared between TCP and UDP plug-ins. */
+/** Helpers de parsing HTTP. */
 public final class HttpUtil {
     private HttpUtil() {}
 
@@ -15,7 +15,6 @@ public final class HttpUtil {
         return HttpMethod.valueOf(token.toUpperCase());
     }
 
-    /** Splits "/path?a=1&b=2" -> (path, query). */
     public static String[] splitPathQuery(String target) {
         int q = target.indexOf('?');
         if (q < 0) return new String[] { target, "" };

@@ -4,11 +4,7 @@ import br.ufrn.middleware.annotation.HttpMethod;
 
 import java.util.Map;
 
-/**
- * Client-side counterpart of {@link br.ufrn.middleware.protocol.ProtocolPlugin}.
- * Sends a request to a remote host and returns the raw body of the response.
- * Implementations exist per protocol (TCP HTTP, UDP).
- */
+/** Cliente do protocolo. Espelho do ProtocolPlugin do lado servidor. */
 public interface RemoteClient {
     String protocol();
 

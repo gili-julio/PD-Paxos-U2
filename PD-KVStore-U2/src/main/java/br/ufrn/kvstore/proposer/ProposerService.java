@@ -23,15 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Proposer Remote Object. Per-Request lifecycle: every {@code PUT} produces a
- * fresh instance, so concurrent rounds never share mutable state. The shared
- * {@link ProposalNumberGenerator} and {@link ClientBroker} live in
- * {@link ProposerContext}.
- *
- * <p>The Proposer drives 2-phase Paxos by sending {@code prepare}/{@code accept}
- * to the Gateway's relay service, which fans out to all known acceptors.
- */
+/** Proposer Paxos. PER_REQUEST. Estado compartilhado fica no ProposerContext. */
 @RemoteObject(id = "proposer")
 @Lifecycle(Lifecycle.Kind.PER_REQUEST)
 public class ProposerService {

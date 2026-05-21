@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-/** Ordered chain of {@link InvocationInterceptor}s applied around a target call. */
+/** Chain ordenada de interceptors. */
 public final class InterceptorChain {
     private final List<InvocationInterceptor> interceptors;
 

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Protocol-agnostic response envelope. */
+/** Envelope de resposta neutro de protocolo. */
 public final class Response {
     private final int status;
     private final Map<String, String> headers;

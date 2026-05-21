@@ -1,8 +1,6 @@
 package br.ufrn.middleware.broker;
 
-/**
- * Remoting Error pattern. Carries an HTTP status to surface to the client.
- */
+/** Remoting Error pattern. */
 public class RemotingException extends RuntimeException {
     private final int httpStatus;
 

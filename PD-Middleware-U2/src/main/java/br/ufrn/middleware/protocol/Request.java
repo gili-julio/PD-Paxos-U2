@@ -6,10 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Protocol-agnostic request envelope. Built by a {@link ProtocolPlugin} from
- * the wire format and consumed by the {@link br.ufrn.middleware.broker.ServerRequestHandler}.
- */
+/** Envelope de requisicao neutro de protocolo. */
 public final class Request {
     private final HttpMethod method;
     private final String path;

@@ -19,10 +19,7 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Reflects over a {@link RemoteObject}-annotated class to build the
- * {@link RemoteEntry} (object id, lifecycle, route table, param bindings).
- */
+/** Scanner reflexivo: classe @RemoteObject -> RemoteEntry. */
 public final class RemoteObjectScanner {
 
     private RemoteObjectScanner() {}
@@ -94,7 +91,6 @@ public final class RemoteObjectScanner {
         }
         Param par = p.getAnnotation(Param.class);
         if (par != null) {
-            // BODY_FIELD by default; if name matches a path var, treat as path.
             if (tpl.varNames().contains(par.name())) {
                 return new ParamBinding(ParamBinding.Source.PATH, par.name(), p.getParameterizedType(), par.required());
             }

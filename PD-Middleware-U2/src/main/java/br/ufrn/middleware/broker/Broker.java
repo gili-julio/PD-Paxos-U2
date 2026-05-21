@@ -13,13 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Broker (Remoting Pattern). Façade that wires the platform together: a
- * {@link Lookup} registry, an {@link Invoker}, a {@link Marshaller}, the
- * {@link ProtocolRegistry}, and the {@link ServerRequestHandler} that ties
- * them to the wire. Build it with {@link #builder()} and call
- * {@link #start(String, int)} to begin serving.
- */
+/** Broker. Facade que une Lookup, Invoker, Marshaller, ProtocolRegistry, SRH. */
 public final class Broker {
     private static final Logger log = LoggerFactory.getLogger(Broker.class);
 
@@ -43,7 +37,6 @@ public final class Broker {
 
     public static Builder builder() { return new Builder(); }
 
-    /** Registers a Remote Object class. Scans its annotations and adds it to {@link Lookup}. */
     public Broker register(Class<?> remoteObjectClass) {
         RemoteEntry entry = RemoteObjectScanner.scan(remoteObjectClass);
         lookup.register(entry);
@@ -58,7 +51,7 @@ public final class Broker {
         return this;
     }
 
-    /** Starts a protocol plug-in on {@code port}. Pode ser chamado varias vezes para suportar multiplos protocolos em paralelo. */
+    /** Pode ser chamado N vezes para abrir multiplos protocolos. */
     public void start(String protocolName, int port) throws Exception {
         ProtocolPlugin plugin = protocols.get(protocolName);
         ServerRequestHandler srh = new ServerRequestHandler(
@@ -91,7 +84,6 @@ public final class Broker {
 
         public Builder addProtocol(ProtocolPlugin p) { protocols.register(p); return this; }
 
-        /** Installs the two built-in plug-ins (TCP + UDP). */
         public Builder withDefaultProtocols() {
             return addProtocol(new TcpHttpProtocolPlugin())
                     .addProtocol(new UdpProtocolPlugin());

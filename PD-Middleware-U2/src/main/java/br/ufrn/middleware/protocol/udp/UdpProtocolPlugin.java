@@ -18,14 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-/**
- * UDP Protocol Plug-In with HTTP-like envelope. Each datagram carries a full
- * request (request-line + headers + body) and the matching reply is sent back
- * to the source address. Useful for the lightweight Paxos relay path.
- *
- * <p>Datagram size is bounded by {@link #BUFFER_SIZE}; payloads must fit in one
- * UDP packet.
- */
+/** Plug-In UDP. Envelope HTTP-like em 1 datagrama (max 64KB). */
 public final class UdpProtocolPlugin implements ProtocolPlugin {
     private static final Logger log = LoggerFactory.getLogger(UdpProtocolPlugin.class);
     private static final int BUFFER_SIZE = 64 * 1024;

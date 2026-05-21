@@ -24,10 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Gateway: ponto unico de entrada externo. Faz registry + heartbeat e roteia
- * PUT/GET para Proposer/Acceptor (round-robin). Lifecycle STATIC.
- */
+/** Gateway: entrada externa. Registry, heartbeat, roteamento round-robin. */
 @RemoteObject(id = "gateway")
 @Lifecycle(Lifecycle.Kind.STATIC)
 public class GatewayService {
@@ -58,7 +55,6 @@ public class GatewayService {
         return GatewayRegistry.get().all();
     }
 
-    /** Rotea PUT para um Proposer ativo (round-robin). */
     @MethodMapping(method = HttpMethod.PUT, path = "/kv/{key}")
     public PutResponse putKv(@PathVar("key") String key, @Body String rawBody) {
         ServiceInfo target = pick("proposer", proposerRr);
@@ -74,7 +70,6 @@ public class GatewayService {
         }
     }
 
-    /** Rotea GET para um Acceptor ativo (round-robin). */
     @MethodMapping(method = HttpMethod.GET, path = "/kv/{key}")
     public KvResult getKv(@PathVar("key") String key) {
         ServiceInfo target = pick("acceptor", acceptorRr);

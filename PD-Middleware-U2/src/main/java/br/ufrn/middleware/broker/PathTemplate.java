@@ -7,10 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Compiles a path template like {@code /kv/{key}} into a regex that matches
- * concrete paths and extracts named variables.
- */
+/** Compila template /kv/{key} em regex e extrai vars. */
 public final class PathTemplate {
     private static final Pattern VAR = Pattern.compile("\\{([^/{}]+)}");
 
@@ -39,7 +36,6 @@ public final class PathTemplate {
     public String template() { return template; }
     public List<String> varNames() { return varNames; }
 
-    /** Returns a map of var->value, or null if no match. */
     public Map<String, String> match(String concretePath) {
         Matcher m = regex.matcher(concretePath);
         if (!m.matches()) return null;

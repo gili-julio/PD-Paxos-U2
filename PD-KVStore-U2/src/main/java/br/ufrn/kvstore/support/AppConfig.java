@@ -3,16 +3,7 @@ package br.ufrn.kvstore.support;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Parser de args --chave=valor.
- *
- * <p>Args extras:
- * <ul>
- *   <li>{@code --heartbeat-port=N}: porta UDP do gateway dedicada a heartbeat (default = port+1).</li>
- *   <li>{@code --heartbeat-gateway=udp://host:port}: AOR UDP do gateway para heartbeat
- *       (default = derivado do --gateway trocando protocolo para udp e porta para heartbeat-port).</li>
- * </ul>
- */
+/** Parser de args --chave=valor. heartbeat-port default = port+1; heartbeat-gateway derivado. */
 public record AppConfig(String role, String protocol, String host, int port,
                         String gateway, String heartbeatGateway,
                         int heartbeatPort, String id) {
@@ -46,7 +37,6 @@ public record AppConfig(String role, String protocol, String host, int port,
         return new AppConfig(role, protocol, host, port, gateway, heartbeatGateway, heartbeatPort, id);
     }
 
-    /** Deriva AOR UDP a partir do AOR TCP do gateway (porta = porta_tcp + 1). */
     private static String deriveUdpHeartbeat(String gatewayAor) {
         int schemeEnd = gatewayAor.indexOf("://");
         int portStart = gatewayAor.lastIndexOf(':');

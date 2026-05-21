@@ -4,10 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-/**
- * Absolute Object Reference (AOR) - protocol + host + port + object id.
- * Wire form: {@code <protocol>://<host>:<port>/<objectId>}.
- */
+/** AOR: protocol://host:port/objectId. */
 public final class AbsoluteObjectReference {
     private final String protocol;
     private final String host;

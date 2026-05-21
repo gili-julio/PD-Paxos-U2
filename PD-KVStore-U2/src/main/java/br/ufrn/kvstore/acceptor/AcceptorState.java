@@ -2,7 +2,7 @@ package br.ufrn.kvstore.acceptor;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Estado Paxos por chave: maior proposta prometida, valor aceito. */
+/** Estado Paxos por chave. */
 public final class AcceptorState {
 
     private final ConcurrentHashMap<String, KeyState> stateByKey = new ConcurrentHashMap<>();

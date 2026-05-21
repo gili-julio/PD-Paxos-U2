@@ -23,10 +23,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Worker que faz fanout PREPARE/ACCEPT para os acceptors.
- * Lifecycle POOLED: pool limita rounds concorrentes (backpressure no gateway).
- */
+/** Fanout PREPARE/ACCEPT para acceptors. POOLED p/ backpressure. */
 @RemoteObject(id = "paxos-relay")
 @Lifecycle(value = Lifecycle.Kind.POOLED, poolSize = 512)
 public class PaxosRelayWorker {

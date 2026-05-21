@@ -24,14 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-/**
- * Plug-In TCP HTTP/1.1 com keep-alive. Cada conexao e tratada em uma virtual
- * thread que faz loop lendo multiplos requests do mesmo socket ate o cliente
- * fechar (Connection: close) ou ficar ocioso ({@link #IDLE_TIMEOUT_MS}).
- *
- * <p>Keep-alive aliviar portas efemeras TCP no cliente (TIME_WAIT acumulado
- * sem isso → BindException sob carga).
- */
+/** Plug-In TCP HTTP/1.1 com keep-alive. Virtual thread por conexao. */
 public final class TcpHttpProtocolPlugin implements ProtocolPlugin {
     private static final Logger log = LoggerFactory.getLogger(TcpHttpProtocolPlugin.class);
     private static final int IDLE_TIMEOUT_MS = 30_000;
@@ -73,9 +66,9 @@ public final class TcpHttpProtocolPlugin implements ProtocolPlugin {
                 try {
                     req = readRequest(in);
                 } catch (SocketTimeoutException e) {
-                    return; // idle close, normal
+                    return;
                 }
-                if (req == null) return; // EOF: client fechou
+                if (req == null) return;
 
                 Response resp = dispatcher.apply(req);
 
@@ -89,12 +82,10 @@ public final class TcpHttpProtocolPlugin implements ProtocolPlugin {
         }
     }
 
-    /** Le um request completo do BufferedReader. Devolve null em EOF. */
     private static Request readRequest(BufferedReader in) throws IOException {
         String line = in.readLine();
         if (line == null) return null;
         if (line.isBlank()) {
-            // alguns clientes enviam linha vazia entre requests; pula
             line = in.readLine();
             if (line == null) return null;
         }
@@ -131,7 +122,6 @@ public final class TcpHttpProtocolPlugin implements ProtocolPlugin {
         return new Request(method, path, query, headers, body);
     }
 
-    /** HTTP/1.1: keep-alive default, exceto se Connection: close explicito. */
     private static boolean wantsKeepAlive(Request req) {
         String conn = req.header("Connection");
         if (conn == null) return true;

@@ -13,12 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Invoker (Basic Remoting Pattern). Resolves arguments from the {@link Request}
- * via the {@link RemoteMethod}'s {@link ParamBinding}s, acquires an instance
- * from the {@link InstanceManager}, runs the method through the interceptor
- * chain, and returns the result.
- */
+/** Invoker. Resolve args, acquire instancia, executa via reflection com interceptors. */
 public final class Invoker {
     private final Marshaller marshaller;
 
